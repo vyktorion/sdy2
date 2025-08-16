@@ -343,10 +343,10 @@ export default function DespreNoi() {
                                       </div>
                 <h3 className="text-2xl font-bold mb-6">
                   <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                    Instructorii Serendipity Academy Telefon
+                    Instructorii Serendipity Academy
                   </span>
                 </h3>
-                <p className="text-gray-800 dark:text-gray-300 leading-relaxed mb-8">
+                <p className="px-5 text-gray-800 dark:text-gray-300 leading-relaxed mb-8">
                   Echipa noastră este formată din instructori cu experiență vastă în dans. 
                   Fiecare membru al echipei aduce o perspectivă unică și o pasiune autentică pentru 
                   dezvoltarea talentului copiilor. Împreună, creăm un mediu de învățare care inspiră 
