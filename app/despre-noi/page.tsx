@@ -289,7 +289,7 @@ export default function DespreNoi() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <Card className="bg-gradient-to-br from-gray-400 via-gray-300 to-gray-400 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-2xl max-w-4xl mx-auto">
+            <Card className="hidden lg:block bg-gradient-to-br from-gray-400 via-gray-300 to-gray-400 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-2xl max-w-4xl mx-auto">
               <CardContent className="p-12">
                <div className="relative h-64 mb-8 overflow-hidden">
                   <Image
@@ -303,6 +303,53 @@ export default function DespreNoi() {
                 <h3 className="text-2xl font-bold mb-6">
                   <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                     Instructorii Serendipity Academy
+                  </span>
+                </h3>
+                <p className="text-gray-800 dark:text-gray-300 leading-relaxed mb-8">
+                  Echipa noastră este formată din instructori cu experiență vastă în dans. 
+                  Fiecare membru al echipei aduce o perspectivă unică și o pasiune autentică pentru 
+                  dezvoltarea talentului copiilor. Împreună, creăm un mediu de învățare care inspiră 
+                  și motivează fiecare elev să-și atingă potențialul maxim.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-purple-600 mb-2">10+</div>
+                    <div className="text-sm text-gray-800 dark:text-gray-400">Ani de experiență</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-pink-600 mb-2">5</div>
+                    <div className="text-sm text-gray-800 dark:text-gray-400">Instructori calificati</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">100+</div>
+                    <div className="text-sm text-gray-800 dark:text-gray-400">Elevi activi</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            {/* Mobil */}
+            <Card className="block lg:hidden bg-gradient-to-br from-gray-400 via-gray-300 to-gray-400 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-2xl max-w-4xl mx-auto">
+              <CardContent className="py-12">
+               <div className="relative mb-8 overflow-hidden">
+                  <Image
+                    src="/images/instructori.png"
+                    alt="Echipa Serendipity Academy"
+                    width={800} 
+                    height={600}
+                    className="object-cover rounded-2xl mt-4"
+                  /> 
+                  <Image
+                    src="/images/instructori.png"
+                    alt="Echipa Serendipity Academy"
+                                        fill
+                                        className="object-cover"
+                                      />
+                                      <div className={`absolute inset-0 bg-gradient-to-t test2 opacity-10`} />
+                                      
+                                      </div>
+                <h3 className="text-2xl font-bold mb-6">
+                  <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    Instructorii Serendipity Academy Telefon
                   </span>
                 </h3>
                 <p className="text-gray-800 dark:text-gray-300 leading-relaxed mb-8">
