@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     url: 'https://serendipity-academy.ro',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://sdy2-eight.vercel.app/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Serendipity Academy - Academia de Dans pentru Copii',
