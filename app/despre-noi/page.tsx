@@ -336,7 +336,7 @@ export default function DespreNoi() {
                     alt="Echipa Serendipity Academy"
                     width={800} 
                     height={600}
-                    className="object-cover rounded-2xl mt-4"
+                    className="object-cover rounded-2xl"
                   /> 
                                       <div className={`absolute inset-0 bg-gradient-to-t test2 opacity-10`} />
                                       
