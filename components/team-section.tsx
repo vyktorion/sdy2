@@ -6,7 +6,7 @@ import { Star, Award, Heart } from 'lucide-react';
 
 export default function TeamSection() {
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
+    <section className="py-16 md:py-20 bg-gradient-to-br from-gray-400 via-cyan-400 to-gray-400 dark:from-purple-900/20 dark:to-pink-900/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}

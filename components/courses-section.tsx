@@ -13,7 +13,7 @@ const courses = [
     title: 'BALET',
     description: 'Fundamentele clasice ale dansului, dezvoltarea posturii și a grației.',
     image: '/images/balet.jpeg',
-    color: 'from-pink-500 to-rose-500',
+    color: 'from-pink-400 to-rose-400',
     age: '4-10 ani'
   },
   {
@@ -21,7 +21,7 @@ const courses = [
     title: 'CONTEMPORAN',
     description: 'Expresie artistică liberă, creativitate și tehnici moderne de dans.',
     image: '/images/contemporan.jpeg',
-    color: 'from-blue-500 to-cyan-500',
+    color: 'from-cyan-400 to-cyan-500',
     age: '8-14 ani'
   },
   {
@@ -29,7 +29,7 @@ const courses = [
     title: 'MODERN',
     description: 'Stiluri moderne de dans, energie și mișcări dinamice.',
     image: '/images/modern.jpeg',
-    color: 'from-emerald-500 to-teal-500',
+    color: 'from-cyan-400 to-cyan-500',
     age: '4-16 ani'
   },
   {
@@ -37,14 +37,14 @@ const courses = [
     title: 'INDIVIDUAL',
     description: 'Lecții personalizate adaptate nevoilor și ritmului fiecărui copil.',
     image: '/images/individual.jpeg',
-    color: 'from-orange-500 to-amber-500',
+    color: 'from-pink-400 to-rose-400',
     age: 'Minim 6 ani'
   }
 ];
 
 export default function CoursesSection() {
   return (
-    <section className="py-20 bg-white dark:bg-gray-900">
+    <section className="py-20 bg-gray-800 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -58,7 +58,7 @@ export default function CoursesSection() {
               Cursurile Noastre
             </span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-300 dark:text-gray-300 max-w-3xl mx-auto">
             Oferim o gamă variată de cursuri de dans pentru toate vârstele și nivelurile, 
             de la primii pași în balet la tehnici avansate de dans contemporan.
           </p>
@@ -75,7 +75,7 @@ export default function CoursesSection() {
               whileHover={{ y: -10 }}
               className="group"
             >
-              <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 bg-white dark:bg-gray-800">
+              <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 dark:bg-gray-800">
                 <div className="relative overflow-hidden aspect-[16/9] md:aspect-auto md:h-64">
                   <Image
                     src={course.image}
@@ -95,7 +95,7 @@ export default function CoursesSection() {
                 </div>
                 
                 <CardContent className="p-6">
-                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                  <p className="text-gray-800 dark:text-gray-300 mb-6 leading-relaxed">
                     {course.description}
                   </p>
                   

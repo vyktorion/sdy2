@@ -3,15 +3,24 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-50 via-purple-200 to-purple-50 dark:from-purple-900 dark:via-pink-900 dark:to-blue-900">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 w-32 h-32 bg-purple-300 rounded-full blur-xl"></div>
-        <div className="absolute top-40 right-32 w-24 h-24 bg-pink-300 rounded-full blur-xl"></div>
-        <div className="absolute bottom-32 left-1/3 w-40 h-40 bg-blue-300 rounded-full blur-xl"></div>
+      <div className="absolute inset-0 opacity-1">
+                     <div className="relative mb-8 overflow-hidden">
+                        <Image
+                          src="banner.png"
+                          alt="Echipa Serendipity Academy"
+                          width={1910} 
+                          height={600}
+                          className="object-cover rounded-2xl"
+                        /> 
+                                            <div className={`absolute inset-0 bg-gradient-to-t test2 opacity-70`} />
+                                            
+                                            </div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -41,7 +50,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
             role="complementary"
           >
             Descoperă magia dansului la Serendipity Academy - academia unde copiii învață să se exprime prin mișcare, să dezvolte disciplina și să-și urmeze pasiunea pentru dans.

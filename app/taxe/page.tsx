@@ -53,7 +53,7 @@ const discounts = [
     icon: Users
   },
   {
-    title: 'Modern Frati / Surori',
+    title: 'Modern - Frati / Surori',
     discount: '460 lei',
     description: 'Reducere 60 lei',
     icon: Users
