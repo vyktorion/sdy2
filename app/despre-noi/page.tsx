@@ -338,12 +338,6 @@ export default function DespreNoi() {
                     height={600}
                     className="object-cover rounded-2xl mt-4"
                   /> 
-                  <Image
-                    src="/images/instructori.png"
-                    alt="Echipa Serendipity Academy"
-                                        fill
-                                        className="object-cover"
-                                      />
                                       <div className={`absolute inset-0 bg-gradient-to-t test2 opacity-10`} />
                                       
                                       </div>
