@@ -10,17 +10,31 @@ export default function HeroSection() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-50 via-purple-200 to-purple-50 dark:from-purple-900 dark:via-pink-900 dark:to-blue-900">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-1">
-                     <div className="relative mb-8 overflow-hidden">
-                        <Image
-                          src="banner.png"
-                          alt="Echipa Serendipity Academy"
-                          width={1910} 
-                          height={600}
-                          className="object-cover rounded-2xl"
-                        /> 
+                     {/* Desktop Banner */}
+  <div className="hidden lg:block relative">
+    <Image
+      src="/banner.png"
+      alt="Echipa Serendipity Academy"
+      width={1910} 
+      height={600}
+      className="object-cover rounded-2xl"
+    />
                                             <div className={`absolute inset-0 bg-gradient-to-t test2 opacity-70`} />
                                             
                                             </div>
+                                          
+      {/* Mobile Banner */}
+  <div className="block lg:hidden relative">
+    <Image
+      src="/banner-mobil.png"
+      alt="Echipa Serendipity Academy"
+      width={1910} 
+      height={600}
+      className="object-cover rounded-2xl"
+    />
+                                            <div className={`absolute inset-0 bg-gradient-to-t test2 opacity-70`} />
+                                            
+                                            </div>  
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
