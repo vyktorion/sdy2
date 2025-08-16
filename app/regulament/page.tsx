@@ -237,7 +237,7 @@ export default function Regulament() {
       <section className="py-20 bg-gray-800 dark:from-purple-900/20 dark:to-pink-900/20">
         
     <div className="max-w-6xl mb-20 text-center items-center">
-    <div className="border-t border-gray-700 items-center"></div>
+    <div className="border-t-2 border-gray-700 w-[1000px] mx-auto"></div>
     </div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -283,7 +283,7 @@ export default function Regulament() {
         
 
     <div className="max-w-6xl mb-20 text-center items-center">
-    <div className="border-t border-gray-700"></div>
+    <div className="border-t-2 border-gray-700 w-[1000px] mx-auto"></div>
     </div>
 
         <div className="max-w-7xl my-20 mx-auto px-4 sm:px-6 lg:px-8">

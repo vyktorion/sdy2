@@ -13,7 +13,7 @@ export default function Footer() {
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       
       {/* Coloana 1 - Logo & Descriere */}
-      <div className="ml-14">
+      <div className="lg:ml-14">
   <Image
     src="/og-image1.png"
     alt="Logo Serendipity Academy"
@@ -34,7 +34,7 @@ export default function Footer() {
            className="w-11 h-11 rounded-full hover:opacity-80 transition-opacity"
              />
             </a>
-          <a
+          <a className="mt-1"
            href="https://www.instagram.com/_serendipityacademy_?igsh=ajIwd282Nm13M2Zj"
            target="_blank"
            rel="noopener noreferrer"
@@ -44,7 +44,7 @@ export default function Footer() {
            className="w-10 h-10 rounded-full hover:opacity-80 transition-opacity"
              />
             </a>
-          <a
+          <a className="mt-1"
            href="https://www.tiktok.com/@serendipityacademy?_t=ZN-8yu7s34doVa&_r=1"
            target="_blank"
            rel="noopener noreferrer"
@@ -54,7 +54,7 @@ export default function Footer() {
            className="w-11 h-11 rounded-full hover:opacity-80 transition-opacity"
              />
             </a>
-          <a
+          <a className="mt-1"
            href="http://wa.me/40732416308"
            target="_blank"
            rel="noopener noreferrer"
