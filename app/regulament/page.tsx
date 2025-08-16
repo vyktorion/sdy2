@@ -20,7 +20,7 @@ const sections = [
       'Prezentul regulament se aplică tuturor elevilor înscriși la academia noastră, precum și părinților/tutorilor acestora.',
       'Înscrierea la cursuri implică acceptarea integrală a prezentului regulament.',
       'Serendipity Academy își rezervă dreptul de a modifica regulamentul in orice moment fara notificare prealabila.',
-      'Orice modificări vor fi afișate pe www.serendipity-academy.ro.'
+      'Orice modificări vor fi afișate pe www.serendipity-academy.ro'
     ]
   },
   {
@@ -31,7 +31,7 @@ const sections = [
     content: [
       'Înscrierea se face prin completarea formularului de inscriere de catre parinte/tutore și achitarea abonamentului aferent lunii in curs.',
       'Vârsta minimă pentru înscrierea la cursuri este de 4 ani împliniți.',
-       'La înscriere se va prezenta adeverinta medicala - apt pemtru efort fizic sustinut.',
+       'La înscriere se va prezenta adeverinta medicala - apt pentru efort fizic sustinut.',
       'Prima ședință este gratuită și nu implică obligativitatea continuării cursurilor.',
       'Locurile sunt limitate și se ocupă în ordinea înscrierii.',
       'Serendipity Academy își rezerva dreptul de a refuza înscrierea fără a fi obligată să motiveze decizia.'
