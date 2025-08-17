@@ -38,7 +38,7 @@ const courses = [
     description: 'Lecții personalizate adaptate nevoilor și ritmului fiecărui copil.',
     image: '/images/individual.jpeg',
     color: 'from-pink-400 to-rose-400',
-    age: 'Minim 6 ani'
+    age: 'Minim 4 ani'
   }
 ];
 

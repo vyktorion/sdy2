@@ -52,8 +52,8 @@ export default function CTASection() {
           <Button
   asChild
   size="lg"
-  className="w-full sm:w-auto bg-white text-purple-600 hover:bg-gray-100 px-6 sm:px-12 py-3 sm:py-4 rounded-full text-base sm:text-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
->
+  className="bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold"
+              >
   <Link href="/contact">
     Rezervă ședința gratuită
   </Link>

@@ -86,7 +86,7 @@ const courses = [
     description: 'Lecțiile individuale oferă atenție personalizată și un program adaptat nevoilor specifice ale fiecărui copil. Ideale pentru pregătirea concursurilor sau pentru dezvoltarea accelerată a abilităților.',
     image: '/images/individual.jpeg',
     color: 'from-pink-400 to-rose-400',
-    age: 'Minim 6 ani',
+    age: 'Minim 4 ani',
     duration: '50 min',
     level: 'Niveluri: Incepatori, Intermediar, Avansati',
     groupSize: '1 copil',
