@@ -447,8 +447,6 @@ export default function Inscriere() {
   </CardContent>
 </Card>
 
-
-
           </motion.div>
         </div>
       </section>

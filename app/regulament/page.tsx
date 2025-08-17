@@ -249,98 +249,67 @@ export default function Regulament() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <Card className="bg-gradient-to-br from-gray-400 via-gray-300 to-gray-400 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl">
-              <CardContent className="p-8">
-                <h2 className="text-2xl font-bold mb-6">
-                  <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                    Cuprins Regulament
-                  </span>
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {sections.map((section, index) => (
-                    <motion.a
-                      key={section.id}
-                      href={`#${section.id}`}
-                      whileHover={{ scale: 1.02 }}
-                      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
-                    >
-                      <div className={`w-8 h-8 bg-gradient-to-br ${section.color} rounded-full flex items-center justify-center`}>
-                        <section.icon className="w-4 h-4 text-white" />
-                      </div>
-                      <span className="text-gray-700 dark:text-gray-300 font-medium">
-                        {section.title}
-                      </span>
-                    </motion.a>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Download Section */}
-      <section className="py-1 bg-gray-800 dark:from-purple-900/20 dark:to-pink-900/20">
-        
-
-    <div className="max-w-6xl mb-20 text-center items-center">
-    <div className="border-t-2 border-gray-700 w-[1000px] mx-auto"></div>
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl max-w-2xl mx-auto">
+  <CardContent className="p-8">
+    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+      <Download className="w-8 h-8 text-white" />
     </div>
 
-        <div className="max-w-7xl my-20 mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <Card className="bg-gradient-to-br from-gray-400 via-gray-300 to-gray-400 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl max-w-2xl mx-auto">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Download className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4">
-                  <span className="bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent">
-                    Formular de înscriere
-                  </span>
-                </h3>
-                <p className="font-medium text-gray-800 dark:text-gray-300 mb-6">
-                  Descarcă versiunea printabilă și adu-l completat la prima vizită.
-                </p>
-                <Button
-                      onClick={async () => {
-                        const pdf = new jsPDF();
-                        const images = [
-                          { src: "/formular1.PNG", width: 180, height: 250 },
-                          { src: "/formular2.PNG", width: 180, height: 250 },
-                        ];
-                
-                        for (let i = 0; i < images.length; i++) {
-                          const img = images[i];
-                
-                          // Încarcă imaginea
-                          const imageEl = await new Promise<HTMLImageElement>((resolve) => {
-                            const imgEl = new Image();
-                            imgEl.src = img.src;
-                            imgEl.onload = () => resolve(imgEl);
-                          });
-                
-                          pdf.addImage(imageEl, "PNG", 15, 15, img.width, img.height);
-                
-                          if (i < images.length - 1) pdf.addPage();
-                        }
-                
-                        pdf.save("Formular inscriere.pdf");
-                      }}
-                variant="outline"
-                className="bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold"
-              >
-                  <Download className="w-5 h-5 mr-2" />
-                  Descarcă formularul PDF
-                </Button>
-              </CardContent>
-            </Card>
+    {/* Titlu */}
+    <h3 className="text-2xl font-bold mb-4">
+      <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+        Formular de înscriere
+      </span>
+    </h3>
+
+    {/* Text */}
+    <p className="text-gray-600 dark:text-gray-300 mb-6">
+      Descarcă versiunea printabilă și adu-l completat la prima vizită.
+    </p>
+
+    {/* Buton descărcare PDF */}
+    <Button
+      onClick={async () => {
+        const pdf = new jsPDF();
+
+        const images = [
+          { src: "/formular1.png", width: 180, height: 250 },
+          { src: "/formular2.png", width: 180, height: 250 },
+        ];
+
+        // Funcție pentru a converti imaginea în Base64
+        async function toBase64(url: string) {
+          const response = await fetch(url);
+          const blob = await response.blob();
+          return new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.readAsDataURL(blob);
+          });
+        }
+
+        // Adaugă imaginile în PDF
+        for (let i = 0; i < images.length; i++) {
+          const img = images[i];
+          const imgBase64 = await toBase64(img.src);
+
+          pdf.addImage(imgBase64, "PNG", 15, 15, img.width, img.height);
+
+          if (i < images.length - 1) pdf.addPage();
+        }
+
+        pdf.save("Formular_inscriere.pdf");
+      }}
+      variant="outline"
+      className="border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-8 py-3 rounded-full font-semibold transition-all duration-300"
+    >
+      <div className="flex items-center justify-center">
+        <Download className="w-4 h-4 mr-2" />
+        Descarcă formularul
+      </div>
+    </Button>
+  </CardContent>
+</Card>
           </motion.div>
         </div>
       </section>
