@@ -57,7 +57,7 @@ export default function Navbar() {
                     alt="Echipa Serendipity Academy"
                     width={170} 
                     height={80}
-                    className="object-cover rounded-sm"
+                    className="object-cover rounded-sm mb-1"
                   />
             </motion.div>
           </Link>
