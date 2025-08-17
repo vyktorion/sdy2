@@ -29,7 +29,7 @@ export default function TeamSection() {
                   whileInView={{ opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                   viewport={{ once: true }}
-                  className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 md:mb-8 leading-tight"
+                  className="text-4xl sm:text-5xl md:text-6xl mb-6 md:mb-8 leading-tight"
                 >
                   <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent font-dancing-script">
                     S|A TEAM

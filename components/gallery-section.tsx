@@ -88,10 +88,6 @@ export default function GallerySection() {
               Galeria Noastră
             </span>
           </h2>
-          <p className="text-lg text-gray-300 dark:text-gray-300 max-w-3xl mx-auto">
-            Descoperă momentele magice din academia noastră - de la primii pași
-            la spectacolele.
-          </p>
         </motion.div>
 
         {/* Grid Gallery - only on large screens */}
