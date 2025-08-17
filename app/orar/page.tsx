@@ -79,7 +79,7 @@ export default function Orar() {
             className="relative w-full aspect-[3/2] rounded-lg overflow-hidden group"
           >
             <Image
-              src="/orar.jpg"
+              src="/orar.png"
               alt="Orar Cursuri Dans Serendipity Academy - Program Săptămânal Complet"
               fill
               className="object-cover"

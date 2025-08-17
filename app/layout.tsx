@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   locale: 'ro_RO',
   images: [
     {
-      url: 'https://sdy2-eight.vercel.app/og-image.png', 
+      url: 'https://www.serendipity-academy.ro/og-image.png', 
       width: 1200,
       height: 630,
       alt: 'Serendipity Academy',
