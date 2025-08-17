@@ -122,7 +122,7 @@ export default function Orar() {
                 variant="outline"
                 className="bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold"
               >
-                <Link href="/inscriere">
+                <Link href="/contact">
                   Înscrie-te acum
                 </Link>
               </Button>

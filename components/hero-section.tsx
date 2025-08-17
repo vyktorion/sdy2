@@ -8,9 +8,8 @@ import Image from 'next/image';
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-50 via-purple-200 to-purple-50 dark:from-purple-900 dark:via-pink-900 dark:to-blue-900">
-      {/* Background Pattern */}
       <div className="absolute inset-0 opacity-1">
-                     {/* Desktop Banner */}
+      {/* Desktop Banner */}
   <div className="hidden lg:block relative">
     <Image
       src="/banner.png"
@@ -77,21 +76,22 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold"
+              >
+                <Link href="/contact">
+                  Înscrie-te la o ședință gratuită
+                </Link>
+              </Button>
             <Button
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <Link href="/inscriere">
-                Înscrie-te la o ședință gratuită
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300"
-            >
+                asChild
+                size="lg"
+                variant="outline"
+                className="bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold"
+              >
               <Link href="/cursuri">
                 Explorează cursurile 
               </Link>

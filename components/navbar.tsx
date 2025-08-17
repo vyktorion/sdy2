@@ -88,16 +88,18 @@ export default function Navbar() {
 
             {/* CTA Button */}
             <Button
-              asChild
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-2 rounded-full"
-            >
-              <Link href="/inscriere">ÎNSCRIE-TE</Link>
+                asChild
+                size="lg"
+                variant="outline"
+                className="bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold"
+              >
+              <Link href="/contact">ÎNSCRIE-TE</Link>
             </Button>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
-           {mounted && (
+          {/* {mounted && (
              <Button
                 variant="ghost"
                 size="sm"
@@ -111,6 +113,7 @@ export default function Navbar() {
                 )}
               </Button>
             )}
+               */}
                
             <Button
               variant="ghost"
@@ -145,9 +148,9 @@ export default function Navbar() {
               ))}
               <Button
                 asChild
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-full"
+                className="w-full bg-gradient-to-r from-gray-200 via-gray-400 to-gray-200 text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold"
               >
-                <Link href="/inscriere" onClick={() => setIsOpen(false)}>
+                <Link href="/contact" onClick={() => setIsOpen(false)}>
                   ÎNSCRIE-TE
                 </Link>
               </Button>

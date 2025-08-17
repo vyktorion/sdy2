@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Download, FileText, Shield, Users, Clock, Heart } from 'lucide-react';
+import { jsPDF } from "jspdf";
 
 const sections = [
   {
@@ -120,7 +121,7 @@ const sections = [
   },
   {
     id: 'confidentialitate',
-    title: 'Protecția Datelor și Confidențialitate',
+    title: 'Protecția Datelor',
     icon: Shield,
     color: 'from-indigo-500 to-purple-500',
     content: [
@@ -308,14 +309,30 @@ export default function Regulament() {
                   Descarcă versiunea printabilă și adu-l completat la prima vizită.
                 </p>
                 <Button
-                  onClick={() => {
-                    const link = document.createElement('a');
-                    link.href = '/documents/formular-inscriere-serendipity.pdf';
-                    link.download = 'Formular-Inscriere-Serendipity-Academy.pdf';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                  }}
+                      onClick={async () => {
+                        const pdf = new jsPDF();
+                        const images = [
+                          { src: "/formular1.PNG", width: 180, height: 250 },
+                          { src: "/formular2.PNG", width: 180, height: 250 },
+                        ];
+                
+                        for (let i = 0; i < images.length; i++) {
+                          const img = images[i];
+                
+                          // Încarcă imaginea
+                          const imageEl = await new Promise<HTMLImageElement>((resolve) => {
+                            const imgEl = new Image();
+                            imgEl.src = img.src;
+                            imgEl.onload = () => resolve(imgEl);
+                          });
+                
+                          pdf.addImage(imageEl, "PNG", 15, 15, img.width, img.height);
+                
+                          if (i < images.length - 1) pdf.addPage();
+                        }
+                
+                        pdf.save("Formular inscriere.pdf");
+                      }}
                 variant="outline"
                 className="bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold"
               >
@@ -361,7 +378,7 @@ export default function Regulament() {
                 variant="outline"
                 className="bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold"
               >
-                <Link href="/inscriere">
+                <Link href="/contact">
                   Înscrie-te acum
                 </Link>
               </Button>

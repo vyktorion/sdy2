@@ -95,14 +95,14 @@ export default function CoursesSection() {
                 </div>
                 
                 <CardContent className="p-6">
-                  <p className="text-gray-800 dark:text-gray-300 mb-6 leading-relaxed">
+                  <p className="dark:text-gray-300 mb-6 leading-relaxed">
                     {course.description}
                   </p>
                   
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:text-white group-hover:border-transparent transition-all duration-300"
+                    className="w-full bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 text-purple-600  text-lg group-hover:bg-gradient-to-r group-hover:bg-gray-100 group-hover:border-transparent transition-all duration-300"
                   >
                     <Link href={`/cursuri#${course.id}`} className="flex items-center justify-center space-x-2">
                       <span>Vezi mai mult</span>

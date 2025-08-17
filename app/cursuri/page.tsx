@@ -247,7 +247,7 @@ export default function Cursuri() {
                     asChild
                     className={`bg-gradient-to-r ${course.color} hover:opacity-90 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300`}
                   >
-                    <Link href="/inscriere" className="flex items-center space-x-2">
+                    <Link href="/contact" className="flex items-center space-x-2">
                       <span>Înscrie-te acum</span>
                       <ArrowRight className="w-4 h-4" />
                     </Link>
@@ -292,7 +292,7 @@ export default function Cursuri() {
                 variant="outline"
                 className="bg-gradient-to-br from-gray-200 via-gray-400 to-gray-200 text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold"
               >
-                <Link href="/inscriere">
+                <Link href="/contact">
                   Înscrie-te acum
                 </Link>
               </Button>

@@ -13,21 +13,29 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Gift, Download, Send, Star } from 'lucide-react';
 import { toast } from 'sonner';
+import { jsPDF } from "jspdf";
 
 
 const courses = [
   'Balet (4-6 ani)',
-  'Balet (7-9 ani)',
+  'Balet (6-7 ani)',
+  'Balet (8-9 ani)',
+  'Contemporan (8-12 ani)',
   'Dans Modern (4-5 ani)',
   'Dans Modern (6-7 ani)',
-  'Dans Modern (7-9 ani)',
-  'Dans Modern (9-12 ani)'
+  'Dans Modern (8-9 ani)',
+  'Dans Modern (10-14 ani)',
+  'Dans (4-7 ani) weekend',
+  'Dans (8-12 ani) weekend'
 ];
 
 const packages = [
   '17:00 - 17:45',
-  '18:00 - 18:45',
-  '19:00 - 19:45'
+  '17:50 - 18:35',
+  '18:40 - 19:25',
+  '19:30 - 20:15',
+  '11:00 - 11:45',
+  '12:30 - 12:45'
 ];
 
 export default function Inscriere() {
@@ -85,7 +93,7 @@ export default function Inscriere() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-24 pb-16 bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 dark:from-purple-900/20 dark:via-pink-900/20 dark:to-blue-900/20">
+      <section className="pt-24 pb-16 bg-gradient-to-br from-cyan-400 via-cyan-600 to-cyan-400 dark:from-purple-900/20 dark:via-pink-900/20 dark:to-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -102,7 +110,7 @@ export default function Inscriere() {
                 Înscrie-te Acum
               </span>
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-800 dark:text-gray-300 max-w-3xl mx-auto">
               Completează formularul de mai jos pentru a înscrie copilul tău la Serendipity Academy și pentru a programa prima ședință gratuită.
             </p>
           </motion.div>
@@ -377,36 +385,62 @@ export default function Inscriere() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl max-w-2xl mx-auto">
-              <CardContent className="p-8">
+<Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl max-w-2xl mx-auto">
+  <CardContent className="p-8">
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Download className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">
-                  <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                    Formular de înscriere
-                  </span>
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  Descarcă versiunea printabilă și adu-l completat la prima vizită.
-                </p>
-                <Button
-                  onClick={() => {
-                    const link = document.createElement('a');
-                    link.href = '/documents/formular-inscriere-serendipity.pdf';
-                    link.download = 'Formular-Inscriere-Serendipity-Academy.pdf';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                  }}
-                  variant="outline"
-                  className="border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-8 py-3 rounded-full font-semibold transition-all duration-300"
-                >
+
+    {/* Titlu */}
+    <h3 className="text-2xl font-bold mb-4">
+      <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+        Formular de înscriere
+      </span>
+    </h3>
+
+    {/* Text */}
+    <p className="text-gray-600 dark:text-gray-300 mb-6">
+      Descarcă versiunea printabilă și adu-l completat la prima vizită.
+    </p>
+
+    {/* Buton descărcare PDF cu ambele PNG-uri */}
+    <Button
+      onClick={async () => {
+        const pdf = new jsPDF();
+        const images = [
+          { src: "/formular1.PNG", width: 180, height: 250 },
+          { src: "/formular2.PNG", width: 180, height: 250 },
+        ];
+
+        for (let i = 0; i < images.length; i++) {
+          const img = images[i];
+
+          // Încarcă imaginea
+          const imageEl = await new Promise<HTMLImageElement>((resolve) => {
+            const imgEl = new Image();
+            imgEl.src = img.src;
+            imgEl.onload = () => resolve(imgEl);
+          });
+
+          pdf.addImage(imageEl, "PNG", 15, 15, img.width, img.height);
+
+          if (i < images.length - 1) pdf.addPage();
+        }
+
+        pdf.save("Formular inscriere.pdf");
+      }}
+      variant="outline"
+      className="border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-8 py-3 rounded-full font-semibold transition-all duration-300"
+    >
+      <div className="flex items-center justify-center">
                   <Download className="w-4 h-4 mr-2" />
-                  Descarcă formularul PDF
-                </Button>
-              </CardContent>
-            </Card>
+                  Descarcă formularul
+      </div>
+    </Button>
+  </CardContent>
+</Card>
+
+
           </motion.div>
         </div>
       </section>
