@@ -385,11 +385,11 @@ export default function Inscriere() {
             viewport={{ once: true }}
             className="text-center"
           >
-<Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl max-w-2xl mx-auto">
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-xl max-w-2xl mx-auto">
   <CardContent className="p-8">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Download className="w-8 h-8 text-white" />
-                </div>
+    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+      <Download className="w-8 h-8 text-white" />
+    </div>
 
     {/* Titlu */}
     <h3 className="text-2xl font-bold mb-4">
@@ -403,42 +403,50 @@ export default function Inscriere() {
       Descarcă versiunea printabilă și adu-l completat la prima vizită.
     </p>
 
-    {/* Buton descărcare PDF cu ambele PNG-uri */}
+    {/* Buton descărcare PDF */}
     <Button
       onClick={async () => {
         const pdf = new jsPDF();
+
         const images = [
-          { src: "/formular1.PNG", width: 180, height: 250 },
-          { src: "/formular2.PNG", width: 180, height: 250 },
+          { src: "/formular1.png", width: 180, height: 250 },
+          { src: "/formular2.png", width: 180, height: 250 },
         ];
 
+        // Funcție pentru a converti imaginea în Base64
+        async function toBase64(url: string) {
+          const response = await fetch(url);
+          const blob = await response.blob();
+          return new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.readAsDataURL(blob);
+          });
+        }
+
+        // Adaugă imaginile în PDF
         for (let i = 0; i < images.length; i++) {
           const img = images[i];
+          const imgBase64 = await toBase64(img.src);
 
-          // Încarcă imaginea
-          const imageEl = await new Promise<HTMLImageElement>((resolve) => {
-            const imgEl = new Image();
-            imgEl.src = img.src;
-            imgEl.onload = () => resolve(imgEl);
-          });
-
-          pdf.addImage(imageEl, "PNG", 15, 15, img.width, img.height);
+          pdf.addImage(imgBase64, "PNG", 15, 15, img.width, img.height);
 
           if (i < images.length - 1) pdf.addPage();
         }
 
-        pdf.save("Formular inscriere.pdf");
+        pdf.save("Formular_inscriere.pdf");
       }}
       variant="outline"
       className="border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-8 py-3 rounded-full font-semibold transition-all duration-300"
     >
       <div className="flex items-center justify-center">
-                  <Download className="w-4 h-4 mr-2" />
-                  Descarcă formularul
+        <Download className="w-4 h-4 mr-2" />
+        Descarcă formularul
       </div>
     </Button>
   </CardContent>
 </Card>
+
 
 
           </motion.div>
