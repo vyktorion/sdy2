@@ -76,12 +76,14 @@ export default function Orar() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="relative w-full aspect-[3/2] rounded-lg overflow-hidden group"
+            className="
+            relative rounded-lg overflow-hidden group"
           >
             <Image
               src="/orar.png"
               alt="Orar Cursuri Dans Serendipity Academy - Program Săptămânal Complet"
-              fill
+              width={1910} 
+              height={800}
               className="object-cover"
               priority
             />
