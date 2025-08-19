@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     url: 'https://www.serendipity-academy.ro',
     images: [
       {
-        url: 'https://www.serendipity-academy.ro/og-image-v2.png',
+        url: 'https://www.serendipity-academy.ro/og-image1.png',
         width: 1200,
         height: 630,
         alt: 'Serendipity Academy',
