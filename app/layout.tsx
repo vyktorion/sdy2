@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     description: 'Never Miss A Chance To Dance!',
     type: 'website',
     locale: 'ro_RO',
+    url: 'https://www.serendipity-academy.ro',
     images: [
       {
         url: 'https://www.serendipity-academy.ro/og-image.png',
@@ -32,6 +33,12 @@ export const metadata: Metadata = {
         alt: 'Serendipity Academy',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Serendipity Academy',
+    description: 'Never Miss A Chance To Dance!',
+    images: ['https://www.serendipity-academy.ro/og-image.png'],
   },
 };
 
