@@ -34,12 +34,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Serendipity Academy',
-    description: 'Never Miss A Chance To Dance!',
-    images: ['https://www.serendipity-academy.ro/og-image.png'],
-  },
 };
 
 export default function RootLayout({
