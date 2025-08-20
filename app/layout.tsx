@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     url: 'https://serendipity-academy.ro',
     images: [
       {
-        url: 'https://serendipity-academy.ro/og-image.png',
+        url: 'https://serendipity-academy.ro/og-image2.png',
         width: 1200,
         height: 630,
         alt: 'Serendipity Academy',
@@ -41,12 +41,12 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Serendipity Academy',
     description: 'Never Miss A Chance To Dance!',
-    images: ['https://serendipity-academy.ro/og-image.png'],
+    images: ['https://serendipity-academy.ro/og-image2.png'],
     site: '@serendipityacademy',
     creator: '@serendipityacademy',
   },
   other: {
-    'og:image:secure_url': 'https://serendipity-academy.ro/og-image.png',
+    'og:image:secure_url': 'https://serendipity-academy.ro/og-image2.png',
     'og:image:type': 'image/png',
     'og:image:width': '1200',
     'og:image:height': '630',
