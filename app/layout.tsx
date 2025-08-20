@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   description: 'Academie de dans pentru copii în București. Cursuri de balet, dans contemporan și modern. Înscrie-te la o primă ședință gratuită!',
   keywords: 'academie dans copii, balet copii București, dans contemporan, dans modern, lecții dans individuale',
   authors: [{ name: 'Serendipity Academy' }],
+  metadataBase: new URL('https://serendipity-academy.ro'),
   icons: {
     icon: '/favicon.png',
   },
@@ -24,15 +25,31 @@ export const metadata: Metadata = {
     description: 'Never Miss A Chance To Dance!',
     type: 'website',
     locale: 'ro_RO',
-    url: 'https://www.serendipity-academy.ro',
+    url: 'https://serendipity-academy.ro',
     images: [
       {
-        url: 'https://www.serendipity-academy.ro/og-image.png',
+        url: 'https://serendipity-academy.ro/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Serendipity Academy',
+        type: 'image/png',
       },
     ],
+    siteName: 'Serendipity Academy',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Serendipity Academy',
+    description: 'Never Miss A Chance To Dance!',
+    images: ['https://serendipity-academy.ro/og-image.png'],
+    site: '@serendipityacademy',
+    creator: '@serendipityacademy',
+  },
+  other: {
+    'og:image:secure_url': 'https://serendipity-academy.ro/og-image.png',
+    'og:image:type': 'image/png',
+    'og:image:width': '1200',
+    'og:image:height': '630',
   },
 };
 
