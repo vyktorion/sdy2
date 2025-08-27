@@ -57,6 +57,9 @@ export default function HeroSection() {
               CHANCE TO DANCE!
             </span>
           </motion.h1>
+            <h2 className="sr-only">
+              Școală de dans pentru copii în Sector 4 București – balet, dans modern și contemporan
+            </h2>
 
           {/* Subtitle */}
           <motion.p

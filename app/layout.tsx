@@ -12,9 +12,9 @@ const dancingScript = Dancing_Script({
 });
 
 export const metadata: Metadata = {
-  title: 'Serendipity Academy - Academie de Dans pentru Copii | București',
-  description: 'Academie de dans pentru copii în București. Cursuri de balet, dans contemporan și modern. Înscrie-te la o primă ședință gratuită!',
-  keywords: 'academie dans copii, balet copii București, dans contemporan, dans modern, lecții dans individuale',
+  title: 'Serendipity Academy - Academie de Dans pentru Copii | București, sector 4',
+  description: 'Academie de dans pentru copii în sector 4 București. Cursuri de balet, dans contemporan și modern. Înscrie-te la o primă ședință gratuită!',
+  keywords: 'dans copii sector 4, balet copii București, dans contemporan, dans modern, lecții dans individuale, sector 4',
   authors: [{ name: 'Serendipity Academy' }],
   metadataBase: new URL('https://serendipity-academy.ro'),
   icons: {
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     title: 'Serendipity Academy',
     description: 'Never Miss A Chance To Dance!',
     type: 'website',
-    locale: 'ro_RO',
     url: 'https://serendipity-academy.ro',
+    locale: 'ro_RO',
     images: [
       {
         url: 'https://serendipity-academy.ro/og-image21.png',
