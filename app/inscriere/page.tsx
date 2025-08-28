@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
-import type { Metadata } from 'next';
+import { useState, useEffect, useRef } from 'react';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import { Card, CardContent } from '@/components/ui/card';
@@ -10,11 +9,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Gift, Download, Send, Star } from 'lucide-react';
 import { toast } from 'sonner';
 import { jsPDF } from "jspdf";
-
 
 const courses = [
   'Balet (4-6 ani)',
@@ -25,18 +22,59 @@ const courses = [
   'Dans Modern (6-7 ani)',
   'Dans Modern (8-9 ani)',
   'Dans Modern (10-14 ani)',
-  'Dans (4-7 ani) weekend',
-  'Dans (8-12 ani) weekend'
+  'Dans (4-7 ani weekend)',
+  'Dans (8-12 ani weekend)'
 ];
 
-const packages = [
-  '17:00 - 17:45',
-  '17:50 - 18:35',
-  '18:40 - 19:25',
-  '19:30 - 20:15',
-  '11:00 - 11:45',
-  '12:30 - 12:45'
-];
+type Schedule = {
+  day: string;
+  hour: string;
+  minAge: number;
+  maxAge: number;
+};
+
+const courseSchedule: Record<string, Schedule[]> = {
+  "Balet (4-6 ani)": [
+    { day: "Luni", hour: "17:00 - 17:45", minAge: 4, maxAge: 6 },
+    { day: "Miercuri", hour: "17:00 - 17:45", minAge: 4, maxAge: 6 },
+  ],
+  "Balet (6-7 ani)": [
+    { day: "Marți", hour: "17:00 - 17:45", minAge: 6, maxAge: 7 },
+    { day: "Joi", hour: "17:00 - 17:45", minAge: 6, maxAge: 7 },
+  ],
+  "Balet (8-9 ani)": [
+    { day: "Luni", hour: "17:50 - 18:35", minAge: 8, maxAge: 9 },
+    { day: "Vineri", hour: "17:50 - 18:35", minAge: 8, maxAge: 9 },
+  ],
+  "Contemporan (8-12 ani)": [
+    { day: "Marți", hour: "19:30 - 20:15", minAge: 8, maxAge: 12 },
+    { day: "Joi", hour: "19:30 - 20:15", minAge: 8, maxAge: 12 },
+  ],
+  "Dans Modern (4-5 ani)": [
+    { day: "Sâmbătă", hour: "11:00 - 11:45", minAge: 4, maxAge: 5 },
+    { day: "Duminică", hour: "11:00 - 11:45", minAge: 4, maxAge: 5 },
+  ],
+  "Dans Modern (6-7 ani)": [
+    { day: "Marți", hour: "18:40 - 19:25", minAge: 6, maxAge: 7 },
+    { day: "Vineri", hour: "19:30 - 20:15", minAge: 6, maxAge: 7 },
+  ],
+  "Dans Modern (8-9 ani)": [
+    { day: "Joi", hour: "18:40 - 19:25", minAge: 8, maxAge: 9 },
+    { day: "Vineri", hour: "18:40 - 19:25", minAge: 8, maxAge: 9 },
+  ],
+  "Dans Modern (10-14 ani)": [
+    { day: "Miercuri", hour: "17:50 - 18:35", minAge: 10, maxAge: 14 },
+    { day: "Vineri", hour: "17:00 - 17:45", minAge: 10, maxAge: 14 },
+  ],
+  "Dans (4-7 ani weekend)": [
+    { day: "Sâmbătă", hour: "11:00 - 11:45", minAge: 4, maxAge: 7 },
+    { day: "Duminică", hour: "11:00 - 11:45", minAge: 4, maxAge: 7 },
+  ],
+  "Dans (8-12 ani weekend)": [
+    { day: "Sâmbătă", hour: "12:00 - 12:45", minAge: 8, maxAge: 12 },
+    { day: "Duminică", hour: "12:00 - 12:45", minAge: 8, maxAge: 12 },
+  ]
+};
 
 export default function Inscriere() {
   const [formData, setFormData] = useState({
@@ -54,53 +92,105 @@ export default function Inscriere() {
     agreeMarketing: false
   });
 
+  const [availableCourses, setAvailableCourses] = useState<string[]>([]);
+  const [availableDays, setAvailableDays] = useState<string[]>([]);
+  const [availableHours, setAvailableHours] = useState<string[]>([]);
+
+  const [dropdowns, setDropdowns] = useState({ course: false, day: false, hour: false });
+  const dropdownRefs = { 
+    course: useRef<HTMLDivElement>(null), 
+    day: useRef<HTMLDivElement>(null), 
+    hour: useRef<HTMLDivElement>(null) 
+  };
+
+  const toggleDropdown = (name: 'course' | 'day' | 'hour') =>
+    setDropdowns(prev => ({ ...prev, [name]: !prev[name] }));
+
+  const handleClickOutside = (event: MouseEvent) => {
+    Object.keys(dropdownRefs).forEach(key => {
+      const ref = dropdownRefs[key as keyof typeof dropdownRefs];
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setDropdowns(prev => ({ ...prev, [key]: false }));
+      }
+    });
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Filtrare cursuri după vârsta copilului
+  useEffect(() => {
+    if (formData.childAge) {
+      const age = parseInt(formData.childAge, 10);
+      const filtered = courses.filter(course => 
+        courseSchedule[course].some(s => age >= s.minAge && age <= s.maxAge)
+      );
+      setAvailableCourses(filtered);
+      setFormData(prev => ({ ...prev, selectedCourse: '', day: '', hour: '' }));
+      setAvailableDays([]);
+      setAvailableHours([]);
+    } else {
+      setAvailableCourses([]);
+      setFormData(prev => ({ ...prev, selectedCourse: '', day: '', hour: '' }));
+      setAvailableDays([]);
+      setAvailableHours([]);
+    }
+  }, [formData.childAge]);
+
+  // Filtrare zile după curs selectat
+  useEffect(() => {
+    if (formData.selectedCourse) {
+      const schedule = courseSchedule[formData.selectedCourse];
+      setAvailableDays(Array.from(new Set(schedule.map(s => s.day))));
+      setFormData(prev => ({ ...prev, day: '', hour: '' }));
+      setAvailableHours([]);
+    } else {
+      setAvailableDays([]);
+      setAvailableHours([]);
+    }
+  }, [formData.selectedCourse]);
+
+  // Filtrare ore după zi selectată
+  useEffect(() => {
+    if (formData.selectedCourse && formData.day) {
+      const schedule = courseSchedule[formData.selectedCourse];
+      const hoursForDay = schedule
+        .filter(s => s.day === formData.day)
+        .map(s => s.hour);
+      setAvailableHours(hoursForDay);
+      setFormData(prev => ({ ...prev, hour: '' }));
+    } else {
+      setAvailableHours([]);
+      setFormData(prev => ({ ...prev, hour: '' }));
+    }
+  }, [formData.day, formData.selectedCourse]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    if (type === 'checkbox') {
+      setFormData({ ...formData, [name]: (e.target as HTMLInputElement).checked });
+    } else setFormData({ ...formData, [name]: value });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.agreeTerms) {
       toast.error('Trebuie să accepți termenii și condițiile pentru a continua.');
       return;
     }
-    // Here you would typically send the form data to your backend
     toast.success('Înscrierea a fost trimisă cu succes! Vă vom contacta în curând.');
-    // Reset form or redirect
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
-    if (type === 'checkbox') {
-      const checked = (e.target as HTMLInputElement).checked;
-      setFormData({
-        ...formData,
-        [name]: checked
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value
-      });
-    }
-  };
-
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData({
-      ...formData,
-      [name]: value
-    });
   };
 
   return (
     <main className="min-h-screen">
       <Navbar />
-      
+
       {/* Hero Section */}
       <section className="pt-24 pb-16 bg-gradient-to-br from-cyan-400 via-cyan-600 to-cyan-400 dark:from-purple-900/20 dark:via-pink-900/20 dark:to-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
+          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-center">
             <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-full mb-6">
               <Gift className="w-5 h-5" />
               <span className="font-semibold">Prima ședință GRATUITĂ!</span>
@@ -120,12 +210,7 @@ export default function Inscriere() {
       {/* Registration Form */}
       <section className="py-20 bg-gray-800 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
+          <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
             <Card className="bg-white dark:bg-gray-800 border-0 shadow-2xl">
               <CardContent className="p-8 md:p-12">
                 <div className="text-center mb-8">
@@ -140,218 +225,173 @@ export default function Inscriere() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-8">
-                  {/* Parent Information */}
-                  <div>
                     <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white flex items-center">
                       <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-3">
                         <span className="text-white text-sm font-bold">1</span>
                       </div>
                       Informații Părinte/Tutore
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
+
+                  {/* Parent Info */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
                         <label htmlFor="parentName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                           Nume *
                         </label>
-                        <Input
-                          id="parentName"
-                          name="parentName"
-                          type="text"
-                          required
-                          value={formData.parentName}
-                          onChange={handleChange}
-                          placeholder="Numele complet"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="parentPhone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Telefon *
-                        </label>
-                        <Input
-                          id="parentPhone"
-                          name="parentPhone"
-                          type="tel"
-                          required
-                          value={formData.parentPhone}
-                          onChange={handleChange}
-                          placeholder="Numărul de telefon"
-                        />
-                      </div>
-                      <div className="md:col-span-2">
-                        <label htmlFor="parentEmail" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Email *
-                        </label>
-                        <Input
-                          id="parentEmail"
-                          name="parentEmail"
-                          type="email"
-                          required
-                          value={formData.parentEmail}
-                          onChange={handleChange}
-                          placeholder="adresa@email.com"
-                        />
-                      </div>
+                      <Input name="parentName" value={formData.parentName} onChange={handleChange} required placeholder="Numele complet" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Telefon *</label>
+                      <Input name="parentPhone" value={formData.parentPhone} onChange={handleChange} required placeholder="Numărul de telefon" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email *</label>
+                      <Input type="email" name="parentEmail" value={formData.parentEmail} onChange={handleChange} required placeholder="adresa@email.com" />
                     </div>
                   </div>
 
-                  {/* Child Information */}
-                  <div>
+                  {/* Child Info */}
                     <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white flex items-center">
                       <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mr-3">
                         <span className="text-white text-sm font-bold">2</span>
                       </div>
                       Informații Copil
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="childName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Nume copil *
-                        </label>
-                        <Input
-                          id="childName"
-                          name="childName"
-                          type="text"
-                          required
-                          value={formData.childName}
-                          onChange={handleChange}
-                          placeholder="Numele copilului"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="childAge" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Vârsta *
-                        </label>
-                        <Input
-                          id="childAge"
-                          name="childAge"
-                          type="number"
-                          required
-                          min="3"
-                          max="18"
-                          value={formData.childAge}
-                          onChange={handleChange}
-                          placeholder="Vârsta"
-                        />
-                      </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nume copil *</label>
+                      <Input name="childName" value={formData.childName} onChange={handleChange} required placeholder="Numele copilului" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Vârsta copil *</label>
+                      <Input type="number" name="childAge" value={formData.childAge} onChange={handleChange} min={3} max={18} required placeholder="Vârsta" />
                     </div>
                   </div>
 
-                  {/* Course Selection */}
-                  <div>
+                  {/* Course / Day / Hour Dropdowns */}
                     <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white flex items-center">
                       <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center mr-3">
                         <span className="text-white text-sm font-bold">3</span>
                       </div>
                       Selecție Curs
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Course */} 
+                  <div ref={dropdownRefs.course} className="relative">
                         <label htmlFor="selectedCourse" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                           Cursul dorit *
                         </label>
-                        <Select onValueChange={(value) => handleSelectChange('selectedCourse', value)}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Alege cursul" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {courses.map((course) => (
-                              <SelectItem key={course} value={course}>
-                                {course}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <label htmlFor="day" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Alege ziua
-                        </label>
-                        <Input
-                          id="day"
-                          name="day"
-                          type="date"
-                          required
-                          value={formData.day}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="hour" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Alege ora
-                        </label>
-                        <Select onValueChange={(value) => handleSelectChange('hour', value)}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="hh:mm" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {packages.map((pkg) => (
-                              <SelectItem key={pkg} value={pkg}>
-                                {pkg}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
+  <button 
+    type="button" 
+    className="w-full p-2 border rounded-md text-left flex justify-between items-center" 
+    onClick={() => toggleDropdown('course')}
+  >
+    {formData.selectedCourse || "Alege cursul"}
+    <span className="text-xl">▾</span>
+  </button>
+  {dropdowns.course && (
+    <ul className="absolute w-full bg-white border mt-1 rounded-md shadow-lg z-10 max-h-60 overflow-auto">
+      {availableCourses.map(course => (
+        <li key={course} className="p-2 hover:bg-gray-100 cursor-pointer"
+          onClick={() => {
+            setFormData({ ...formData, selectedCourse: course, day: '', hour: '' });
+            setDropdowns(prev => ({ ...prev, course: false }));
+          }}
+        >
+          {course}
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
+{/* Day */}
+<div ref={dropdownRefs.day} className="relative">
+  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Alege ziua</label>
+  <button 
+    type="button" 
+    className="w-full p-2 border rounded-md text-left flex justify-between items-center" 
+    onClick={() => toggleDropdown('day')} 
+    disabled={!formData.selectedCourse}
+  >
+    {formData.day || "Alege ziua"} 
+    <span className="text-xl">▾</span>
+  </button>
+  {dropdowns.day && (
+    <ul className="absolute w-full bg-white border mt-1 rounded-md shadow-lg z-10 max-h-60 overflow-auto">
+      {availableDays.map(day => (
+        <li key={day} className="p-2 hover:bg-gray-100 cursor-pointer"
+          onClick={() => {
+            setFormData({ ...formData, day });
+            setDropdowns(prev => ({ ...prev, day: false }));
+          }}
+        >
+          {day}
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
+{/* Hour */}
+<div className="relative">
+  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ora</label>
+  {availableHours.length === 1 ? (
+    <div className="p-2 border rounded-md">{availableHours[0]}</div>
+  ) : (
+    <div ref={dropdownRefs.hour} className="relative">
+      <button 
+        type="button" 
+        className="w-full p-2 border rounded-md text-left flex justify-between items-center" 
+        onClick={() => toggleDropdown('hour')} 
+        disabled={!formData.day}
+      >
+        {formData.hour || "hh:mm"}
+      </button>
+      {dropdowns.hour && (
+        <ul className="absolute w-full bg-white border mt-1 rounded-md shadow-lg z-10 max-h-60 overflow-auto">
+          {availableHours.map(hour => (
+            <li key={hour} className="p-2 hover:bg-gray-100"
+              onClick={() => {
+                setFormData({ ...formData, hour });
+                setDropdowns(prev => ({ ...prev, hour: false }));
+              }}
+            >
+              {hour}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )}
+</div>
                   </div>
 
-                  {/* Additional Information */}
-                  <div>
+                  {/* Additional Info */}
+                  <div className="space-y-6">
                     <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white flex items-center">
                       <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mr-3">
                         <span className="text-white text-sm font-bold">4</span>
                       </div>
                       Informații Adiționale
                     </h3>
-                    <div className="space-y-6">
-                      <div>
+                    <div>
                         <label htmlFor="experience" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                           Experiența anterioară în dans
                         </label>
-                        <Textarea
-                          id="experience"
-                          name="experience"
-                          value={formData.experience}
-                          onChange={handleChange}
-                          rows={3}
-                          placeholder="Descrie experiența anterioară a copilului în dans (dacă există)"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="medicalInfo" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Informații medicale relevante
-                        </label>
-                        <Textarea
-                          id="medicalInfo"
-                          name="medicalInfo"
-                          value={formData.medicalInfo}
-                          onChange={handleChange}
-                          rows={3}
-                          placeholder="Menționează orice probleme medicale, alergii sau restricții de care ar trebui să știm"
-                        />
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      </div>
+                      <Textarea name="experience" value={formData.experience} onChange={handleChange} rows={3} placeholder="Descrie experiența anterioară a copilului în dans (dacă există)" />
                     </div>
                   </div>
 
-                  {/* Terms and Conditions */}
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <Checkbox
-                        id="agreeTerms"
-                        name="agreeTerms"
-                        checked={formData.agreeTerms}
-                        onCheckedChange={(checked) => 
-                          setFormData({ ...formData, agreeTerms: checked as boolean })
-                        }
-                        className="mt-1"
-                      />
+                  {/* Terms */}
+                  <div className="flex items-start space-x-3 mt-4">
+                    <Checkbox id="agreeTerms" name="agreeTerms" checked={formData.agreeTerms} onCheckedChange={(checked) => setFormData({ ...formData, agreeTerms: checked as boolean })} />
+                    <label htmlFor="agreeTerms" className="text-sm text-gray-600 dark:text-gray-300">
                       <label htmlFor="agreeTerms" className="text-sm text-gray-600 dark:text-gray-300">
                         Accept  
                         <a href="/regulament" className="text-purple-600 hover:underline ml-1">regulamentul</a> Serendipity Academy *
                       </label>
-                    </div>
+                    </label>
                   </div>
 
                   {/* Submit Button */}
@@ -368,12 +408,14 @@ export default function Inscriere() {
                       Vă vom contacta în maxim 24 de ore pentru a programa prima ședință gratuită
                     </p>
                   </div>
+
                 </form>
               </CardContent>
             </Card>
           </motion.div>
         </div>
       </section>
+      
 
       {/* Download Section */}
       <section className="py-20 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">

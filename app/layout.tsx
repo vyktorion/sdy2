@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/sonner';
 import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
-const dancingScript = Dancing_Script({ 
+const dancingScript = Dancing_Script({
   subsets: ['latin'],
   variable: '--font-dancing-script'
 });
@@ -74,6 +74,26 @@ export default function RootLayout({
             gtag('config', 'G-VQ9BZYN5HD');
           `}
         </Script>
+
+        {/* Structured Data (Organization + Logo) */}
+        <Script
+          id="ld-json-org"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Serendipity Academy",
+              url: "https://serendipity-academy.ro",
+              logo: "https://serendipity-academy.ro/log.png", 
+              sameAs: [
+                "https://www.facebook.com/p/Serendipity-Academy-100071676717042",
+                "https://www.instagram.com/_serendipityacademy_"
+              ]
+            }),
+          }}
+        />
       </head>
       <body className={`${inter.className} ${dancingScript.variable}`}>
         <ThemeProvider
